@@ -1,0 +1,158 @@
+Creación de un buscador de Paises ANGULAR
+-Maquetación en papel.
+
+-Comandos básicos para crear la aplicación:
+-- ng new <TuApp> --no-standalone
+
+-CREAR EL MODULO EN LA CARPETA
+--ng g m <Tu-Modulo> --routing --flat
+
+
+-Definir las herramientas que voy a usar.
+--Bootstrap
+--QuickType
+--FontAwesome
+
+-Hacer el routing.
+{
+  path: '',
+  children: [
+    {
+      path: 'medico',
+      loadChildren: ()=>import('./domine/medicos/medic.module').then(m=>m.MedicModule)
+    }
+  ]
+},
+
+Pasos:
+1.- Crear las carpetas
+2.- Crear el modulo de cada una de las carpetas
+--Con este comando
+-ng g m login --routing --flat
+3.- Hacer el routing
+-Con la siguiente línea de código
+path: '',
+  children: [
+    {
+      path: 'medico',
+      loadChildren: ()=>import('./domine/medicos/medic.module').then(m=>m.MedicModule)
+    }
+  ]
+4.- Hacer el entrelazado de las páginas
+5.- Empezar desde lo más fácil, hasta lo más complejo
+6.- Consumir el servicio
+
+---Como debemos de consumir la API?
+
+----En APP.MODULE.TS, debemos de importar lo siguiente:
+-import { HttpClientModule } from '@angular/common/http';
+//Este es un paso importante, ya que sin este NO podemos consumir la API
+
+---Crear la carpeta enviroment, que contendrá la URL de la API
+export const enviromente={
+    production: false,
+    API_URL: 'https://restcountries.com/v3.1'
+};
+---Crear la carpeta services donde van a estar alojados los métodos de la API
+---constructor(private http:HttpClient) { }
+
+  //Metodos de la API
+  getData():Observable<any>{
+    return this.http.get<any>(`${enviromente.API_URL}/all`)
+  }
+
+7.- Consumir la API
+En la carpeta donde vamos a consumir la API, debemos de colocar las siguientes cosas:
+-Debemos de crear el arreglo que va a contener los datos
+ pais = <Country[]>[];
+
+en el constructor
+constructor(
+    private <variable>: <Tu Servicio>,
+  ) 
+
+ getData() {
+    this.countryService.getData().subscribe((data) => {
+      this.pais = data;
+    });
+  }
+
+
+
+--Una plantilla de bootstrap
+<div class="col">
+  <div class="card">
+    <div class="card-bodu">
+      <div class="container text-center">
+        <img
+          src="https://cloudfront-us-east-1.images.arcpublishing.com/copesa/KCV3Q7JXTBEMVAJVBDONB6YIFE.png"
+          alt=""
+        />
+      </div>
+      <hr />
+      <h4 class="text-center">Nombre País</h4>
+      <hr />
+      <div class="row text-center">
+        <div class="col">
+          <h3>Población</h3>
+          <p>Y Cantidad</p>
+        </div>
+        <div class="col">
+          <h3>Idiomas</h3>
+          <p>x Cantidad</p>
+        </div>
+      </div>
+      <hr />
+      <div class="row text-center">
+        <div class="col">
+          <h3>Población</h3>
+          <p>Y Cantidad</p>
+        </div>
+        <div class="col">
+          <h3>Idiomas</h3>
+          <p>x Cantidad</p>
+        </div>
+      </div>
+      <hr />
+      <div class="container text-center">
+        <button type="button" class="btn btn-primary mb-2">
+          Agregar a Favoritos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+Local Storage
+-Se guardan localmente lo que vayamos seleccionando
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
